@@ -51,6 +51,22 @@ class Star
 
 	void update()
 	{
-		//
+		if (size > 10) {
+			size -= 5;
+		}
+		else if (size < -10) {
+			size += 5;
+		}
+		else {
+			size += random(-1, 1);
+		}
+
+		// flickering effect
+		if (howFar > 10) {
+			howFar += random(-5, 5);
+		}
+		else {
+			howFar += 5;
+		}
 	}
 }
