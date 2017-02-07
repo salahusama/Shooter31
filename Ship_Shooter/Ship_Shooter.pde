@@ -21,19 +21,39 @@ void setup()
 
 	ship = new Ship(width / 2, height / 2);
 	gameObjects.add(ship);
-	background = new Background(200);
 
-	//cam = new PeasyCam(this.ship, 0);
-	//cam.setMinimumDistance(50);
-	//cam.setMinimumDistance(500);
+	float xLimit1 = ship.pos.x - 1000;
+	float xLimit2 = ship.pos.x + 1000;
+	float yLimit1 = ship.pos.x - 1000;
+	float yLimit2 = ship.pos.x + 1000;
 
-	//cam.setRollRotationMode();
+	background = new Background(200, xLimit1, xLimit2, yLimit1, yLimit2);
+
+	/*
+	cam = new PeasyCam(this, 0);
+	cam.setMinimumDistance(50);
+	cam.setMinimumDistance(500);
+	cam.setRollRotationMode();
+	*/
 }
 
 void draw()
 {
 	background.render();
 	
+	//cam.lookAt(ship.pos.x, ship.pos.y, 0);
+	/*
+	if (ship.pos.x % (width / 4) == 0)
+	{
+		float xLimit1 = ship.pos.x - 1000;
+		float xLimit2 = ship.pos.x + 1000;
+		float yLimit1 = ship.pos.x - 1000;
+		float yLimit2 = ship.pos.x + 1000;
+
+		background = new Background(200, xLimit1, xLimit2, yLimit1, yLimit2);
+	}
+	*/
+
 	for (GameObject o : gameObjects)
 	{
 		o.render();

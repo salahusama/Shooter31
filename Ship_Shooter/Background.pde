@@ -2,13 +2,13 @@ class Background
 {
 	ArrayList<Star> stars;
 
-	Background(float starNum)
+	Background(float starNum, float xLimit1, float xLimit2, float yLimit1, float yLimit2)
 	{
 		stars = new ArrayList<Star>();
 		for (int i = 0; i < starNum; i++)
 		{
-			float x = random(-1000, 2000);
-			float y = random(-1000, 1500);
+			float x = random(xLimit1, xLimit2);
+			float y = random(yLimit1, yLimit2);
 			float size = random(10);
 			float dist = random(255);
 			stars.add( new Star(x, y, size, dist) );
