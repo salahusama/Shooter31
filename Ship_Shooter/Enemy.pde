@@ -1,4 +1,4 @@
-class Enemy extends GameObject
+abstract class Enemy extends GameObject
 {
 	PVector forward;
 	float health;
