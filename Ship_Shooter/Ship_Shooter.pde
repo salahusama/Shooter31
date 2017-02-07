@@ -4,12 +4,13 @@ PeasyCam cam;
 
 float gameTime = 0.0;
 float timeDelta = 1.0 / 60;
+Background background;
 
 ArrayList<GameObject> gameObjects;
 ArrayList<Bullet> bullets;
 
 Ship ship;
-Background background;
+BasicEnemy tempEnemy;
 
 void setup()
 {
@@ -21,6 +22,9 @@ void setup()
 
 	ship = new Ship(width / 2, height / 2);
 	gameObjects.add(ship);
+
+	tempEnemy = new BasicEnemy(100, 100, 2, ship, 100);
+	gameObjects.add(tempEnemy);
 
 	float xLimit1 = ship.pos.x - 1000;
 	float xLimit2 = ship.pos.x + 1000;

@@ -56,7 +56,7 @@ class Ship extends GameObject
 		forward.y  = -cos(theta);
 		
 		if ( checkKey(UP) ) {
-			force.add(PVector.mult(forward, power));      
+			force.add(PVector.mult(forward, power));
 		}
 		if ( checkKey(DOWN) ) {
 			force.add(PVector.mult(forward, -power));      

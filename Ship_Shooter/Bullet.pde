@@ -25,7 +25,7 @@ class Bullet extends GameObject
 	{
 		strokeWeight(3);
 		stroke(0, 0, 250);
-		fill(180, 255, 255);
+		fill(180, 255, 255, 255);
 
 		pushMatrix();
 		translate(pos.x, pos.y);
