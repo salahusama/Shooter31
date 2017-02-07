@@ -44,26 +44,13 @@ void setup()
 void draw()
 {
 	background.render();
-	
-	//cam.lookAt(ship.pos.x, ship.pos.y, 0);
-	/*
-	if (ship.pos.x % (width / 4) == 0)
-	{
-		float xLimit1 = ship.pos.x - 1000;
-		float xLimit2 = ship.pos.x + 1000;
-		float yLimit1 = ship.pos.x - 1000;
-		float yLimit2 = ship.pos.x + 1000;
-
-		background = new Background(200, xLimit1, xLimit2, yLimit1, yLimit2);
-	}
-	*/
 
 	for (GameObject o : gameObjects)
 	{
 		o.render();
 		o.update();
 	}
-
+	
 	for (Bullet b : bullets)
 	{
 		if (b.alive) {
