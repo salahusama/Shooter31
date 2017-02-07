@@ -9,6 +9,7 @@ ArrayList<GameObject> gameObjects;
 ArrayList<Bullet> bullets;
 
 Ship ship;
+Background background;
 
 void setup()
 {
@@ -20,7 +21,8 @@ void setup()
 
 	ship = new Ship(width / 2, height / 2);
 	gameObjects.add(ship);
-	
+	background = new Background(200);
+
 	//cam = new PeasyCam(this.ship, 0);
 	//cam.setMinimumDistance(50);
 	//cam.setMinimumDistance(500);
@@ -30,8 +32,7 @@ void setup()
 
 void draw()
 {
-	// background.render();
-	background(0);
+	background.render();
 	
 	for (GameObject o : gameObjects)
 	{
