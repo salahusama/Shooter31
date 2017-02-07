@@ -24,3 +24,26 @@ class Background
 		}
 	}
 }
+
+class Star
+{
+	float x;
+	float y;
+	float size;
+	float howFar;
+
+	Star(float x, float y, float size, float howFar)
+	{
+		this.x = x;
+		this.y = y;
+		this.size = size;
+		this.howFar = howFar;
+	}
+
+	void render()
+	{
+		noStroke();
+		fill(255, howFar);
+		ellipse(x, y, size, size);
+	}
+}
