@@ -12,4 +12,9 @@ class GameObject
 		fill(255);
 		ellipse(pos.x, pos.y, 10, 10);
 	}
+
+	void update()
+	{
+		// k
+	}
 }

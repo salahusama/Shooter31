@@ -10,6 +10,9 @@ class Ship extends GameObject
 	float mass;
 	float theta;
 	float power;
+	float shield;
+	float lastShot;
+	float fireRate;
 
 	Ship(float x, float y)
 	{
@@ -19,16 +22,21 @@ class Ship extends GameObject
 		accel = new PVector(0, 0);
 		force = new PVector(0, 0);
 		
+		fireRate = 1;
+		lastShot = -1;
+		shield = 10;
 		power = 300;
-		mass = 1;
 		theta = 0;
+		mass = 1;
+
 		shipImg = loadImage("ship.png");
+		shipImg.resize(50, 50);
 	}
 
 	void render()
 	{
 		stroke(255);
-		strokeWeight(10);
+		strokeWeight(shield);
 		noFill();
 
 		pushMatrix();
@@ -36,7 +44,7 @@ class Ship extends GameObject
 		translate(pos.x, pos.y);
 		rotate(theta + HALF_PI);
 		
-		ellipse(0, 0, 1.2 * shipImg.width, 1.2 * shipImg.height);
+		ellipse(0, 0, 1.5 * shipImg.width, 1.5 * shipImg.height);
 		image(shipImg, -shipImg.width/2, - shipImg.height/2);
 		
 		popMatrix();
@@ -47,30 +55,61 @@ class Ship extends GameObject
 		forward.x = sin(theta);
 		forward.y  = -cos(theta);
 		
-		if ( checkKey('w') ) {
+		if ( checkKey(UP) ) {
 			force.add(PVector.mult(forward, power));      
 		}
-		if ( checkKey('s') ) {
+		if ( checkKey(DOWN) ) {
 			force.add(PVector.mult(forward, -power));      
 		}
-		if ( checkKey('a') ) {
+		if ( checkKey(LEFT) ) {
 			theta -= 0.1f;
 		}
-		if ( checkKey('d') ) {
+		if ( checkKey(RIGHT) ) {
 			theta += 0.1f;
 		}
-		/*
-		if ( checkKey(' ') )
+		if (gameTime - lastShot >= 1 / fireRate)
 		{
-			Bullet b = new Bullet(pos.x, pos.y, theta, 20, 5);
-			bullets.add(b);
+			if ( checkKey(' ') ) {
+				bullet_normal();
+			}
+			if ( checkKey('z') ) {
+				bullet_360();
+			}
+			if ( checkKey('x') ) {
+				bullet_super();
+			}
 		}
-		*/
 		
 		accel = PVector.div(force, mass);
 		velocity.add(PVector.mult(accel, timeDelta));
 		pos.add(PVector.mult(velocity, timeDelta));
 		force.x = force.y = 0;
 		velocity.mult(0.99f);
+	}
+
+	void bullet_normal()
+	{
+		Bullet b = new Bullet(this, pos.x, pos.y, 10, theta);
+		bullets.add(b);
+		lastShot = gameTime;
+	}
+
+	void bullet_360()
+	{
+		float shotAngle = theta;
+		while ( shotAngle - theta < TWO_PI )
+		{
+			Bullet b = new Bullet(this, pos.x, pos.y, 10, shotAngle);
+			bullets.add(b);
+			shotAngle += 0.1;
+		}
+		lastShot = gameTime;
+	}
+
+	void bullet_super()
+	{
+		Bullet b = new Bullet(this, pos.x, pos.y, 100, theta);
+		bullets.add(b);
+		lastShot = gameTime;
 	}
 }

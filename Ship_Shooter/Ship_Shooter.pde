@@ -1,28 +1,51 @@
-float timeDelta = 1.0/60;
+import peasy.*;
 
-ArrayList<GameObject> GameObjects;
+PeasyCam cam;
+
+float gameTime = 0.0;
+float timeDelta = 1.0 / 60;
+
+ArrayList<GameObject> gameObjects;
+ArrayList<Bullet> bullets;
+
 Ship ship;
 
 void setup()
 {
-	fullScreen();
+	fullScreen(P3D);
+
+
+	gameObjects = new ArrayList<GameObject>();
+	bullets = new ArrayList<Bullet>();
+
 	ship = new Ship(width / 2, height / 2);
-	GameObjects.add(ship);
+	gameObjects.add(ship);
+	
+	cam = new PeasyCam(this.ship, 0);
+	cam.setMinimumDistance(50);
+	cam.setMinimumDistance(500);
+
+	cam.setRollRotationMode();
 }
 
 void draw()
 {
-	/*
-	background.render();
-	for (GameObject o : GameObjects)
+	// background.render();
+	background(0);
+	
+	for (GameObject o : gameObjects)
 	{
 		o.render();
 		o.update();
 	}
-	*/
-	background(0);
-	ship.render();
-	ship.update();
+
+	for (Bullet b : bullets)
+	{
+		if (b.alive) {
+			b.render();
+		}
+	}
+	gameTime += timeDelta;
 }
 
 boolean[] keys = new boolean[1000];
