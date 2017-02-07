@@ -42,8 +42,15 @@ class Star
 
 	void render()
 	{
+		update();
+
 		noStroke();
 		fill(255, howFar);
 		ellipse(x, y, size, size);
+	}
+
+	void update()
+	{
+		//
 	}
 }
