@@ -11,8 +11,8 @@ class Ship extends GameObject
 	float theta;
 	float power;
 	float shield;
-	//float lastShot;
-	//float fireRate;
+	float lastShot;
+	float fireRate;
 
 	Ship(float x, float y)
 	{
