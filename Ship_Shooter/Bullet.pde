@@ -1,4 +1,4 @@
-class Bullet extends GameObject
+//class Bullet extends GameObject
 {
 	float theta;
 	float strength;
