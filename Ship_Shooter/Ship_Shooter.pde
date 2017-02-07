@@ -21,11 +21,11 @@ void setup()
 	ship = new Ship(width / 2, height / 2);
 	gameObjects.add(ship);
 	
-	cam = new PeasyCam(this.ship, 0);
-	cam.setMinimumDistance(50);
-	cam.setMinimumDistance(500);
+	//cam = new PeasyCam(this.ship, 0);
+	//cam.setMinimumDistance(50);
+	//cam.setMinimumDistance(500);
 
-	cam.setRollRotationMode();
+	//cam.setRollRotationMode();
 }
 
 void draw()
