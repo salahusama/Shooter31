@@ -87,5 +87,29 @@ class Ship extends GameObject
 		velocity.mult(0.99f);
 	}
 
-	
+	void bullet_normal()
+	{
+		Bullet b = new Bullet(this, pos.x, pos.y, 10, theta);
+		bullets.add(b);
+		lastShot = gameTime;
+	}
+
+	void bullet_360()
+	{
+		float shotAngle = theta;
+		while ( shotAngle - theta < TWO_PI )
+		{
+			Bullet b = new Bullet(this, pos.x, pos.y, 10, shotAngle);
+			bullets.add(b);
+			shotAngle += 0.1;
+		}
+		lastShot = gameTime;
+	}
+
+	void bullet_super()
+	{
+		Bullet b = new Bullet(this, pos.x, pos.y, 100, theta);
+		bullets.add(b);
+		lastShot = gameTime;
+	}
 }
