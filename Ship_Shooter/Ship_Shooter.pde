@@ -2,7 +2,6 @@ import peasy.*;
 
 PeasyCam cam;
 
-float gameTime = 0.0;
 float timeDelta = 1.0 / 60;
 
 ArrayList<GameObject> gameObjects;
