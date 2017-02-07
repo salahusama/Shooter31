@@ -50,11 +50,22 @@ void draw()
 		o.render();
 		o.update();
 	}
-	
+	/* Other for loop allows us to remove bullets after they die
 	for (Bullet b : bullets)
 	{
 		if (b.alive) {
 			b.render();
+		}
+	}*/
+
+	for (int i = 0; i < bullets.size(); ++i)
+	{
+		Bullet b = bullets.get(i);
+		if (b.alive) {
+			b.render();
+		}
+		else {
+			bullets.remove(i);
 		}
 	}
 	gameTime += timeDelta;
