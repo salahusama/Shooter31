@@ -23,7 +23,7 @@ class Ship extends GameObject
 		accel = new PVector(0, 0);
 		force = new PVector(0, 0);
 		
-		fireRate = 1;
+		fireRate = 3;
 		lastShot = -1;
 		power = 300;
 		theta = 0;

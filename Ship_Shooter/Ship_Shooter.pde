@@ -11,7 +11,8 @@ AudioPlayer loudShot;
 float gameTime = 0.0;
 float timeDelta = 1.0 / 60;
 int state;
-int difficulty = 2; // spawn rate
+int difficulty = 10; // spawn rate
+float lastSpawned = 0;
 int score;
 
 Background background;
@@ -74,8 +75,17 @@ void draw()
 	cam.lookAt((double)ship.pos.x, (double)ship.pos.y, 300, 0);
 
 	background.render();
-	ship.render();
-	ship.update();
+
+	if ( ship.health >= 0 )
+	{
+		ship.render();
+		ship.update();
+	}
+	else
+	{
+		gameOver();
+	}
+
 
 	// render enemies
 	//
@@ -87,10 +97,11 @@ void draw()
 		e.update();
 
 		fill(0);
+		textSize(10);
 		textAlign(CENTER, CENTER);
 		text((int) e.health, e.pos.x, e.pos.y);
 		
-		if (e.health < 0) {
+		if (e.health <= 0) {
 			enemies.remove(i);
 		}
 		for (int j = 0; j < shipBullets.size(); j++)
@@ -144,7 +155,7 @@ void draw()
 		}
 	}
 
-	for (int i = 0; i < difficulty; ++i)
+	if ( gameTime - lastSpawned >= difficulty)
 	{
 		float x1 = ship.pos.x - width / 2;
 		float x2 = ship.pos.x + width / 2;
@@ -158,8 +169,19 @@ void draw()
 		else {
 			enemies.add( new BasicEnemy(random(width), y1, 1, size, 100, ship) );
 		}
-	}
+		lastSpawned = gameTime;
+		}
 	gameTime += timeDelta;
+}
+
+void gameOver()
+{
+	fill(255, 50, 50);
+	textSize(100);
+	textAlign(CENTER, CENTER);
+	text("GAME OVER", ship.pos.x, ship.pos.y);
+
+	state = 0;
 }
 
 boolean[] keys = new boolean[1000];
