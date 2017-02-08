@@ -11,6 +11,8 @@ AudioPlayer loudShot;
 float gameTime = 0.0;
 float timeDelta = 1.0 / 60;
 int state;
+int difficulty = 2; // spawn rate
+int score;
 
 Background background;
 
@@ -75,18 +77,6 @@ void draw()
 	ship.render();
 	ship.update();
 
-	// check collisions
-	//
-	for (int j = 0; j < enemyBullets.size(); j++)
-	{
-		Bullet b = enemyBullets.get(j);
-		if ( ship.checkHit(b) )
-		{
-			enemyBullets.remove(j);
-			ship.shake();
-			ship.health -= b.strength;
-		}
-	}
 	// render enemies
 	//
 	for (int i = 0; i < enemies.size(); i++)
@@ -95,6 +85,10 @@ void draw()
 
 		e.render();
 		e.update();
+
+		fill(0);
+		textAlign(CENTER, CENTER);
+		text((int) e.health, e.pos.x, e.pos.y);
 		
 		if (e.health < 0) {
 			enemies.remove(i);
@@ -137,6 +131,34 @@ void draw()
 		}
 	}
 	
+	// check collisions
+	//
+	for (int j = 0; j < enemyBullets.size(); j++)
+	{
+		Bullet b = enemyBullets.get(j);
+		if ( ship.checkHit(b) )
+		{
+			enemyBullets.remove(j);
+			ship.shake();
+			ship.health -= b.strength;
+		}
+	}
+
+	for (int i = 0; i < difficulty; ++i)
+	{
+		float x1 = ship.pos.x - width / 2;
+		float x2 = ship.pos.x + width / 2;
+		float y1 = ship.pos.y - height / 2;
+		float y2 = ship.pos.y + height / 2;
+		float size = random(30, 100);
+
+		if ( random(0, 100) < 50 ) {
+			enemies.add( new BasicEnemy(x1, random(height), 1, size, 100, ship) );
+		}
+		else {
+			enemies.add( new BasicEnemy(random(width), y1, 1, size, 100, ship) );
+		}
+	}
 	gameTime += timeDelta;
 }
 

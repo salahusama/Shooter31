@@ -25,10 +25,7 @@ class BasicEnemy extends Enemy
 		fill(c);
 		noStroke();
 		ellipse(0, 0, oWidth, oHeight);
-
-		textAlign(CENTER, CENTER);
-		text(health, 0, 0);
-
+		
 		popMatrix();
 
 		if (doShake) {
