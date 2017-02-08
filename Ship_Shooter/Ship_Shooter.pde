@@ -76,105 +76,112 @@ void draw()
 
 	background.render();
 
-	if ( ship.health >= 0 )
-	{
-		ship.render();
-		ship.update();
-	}
-	else
-	{
+	// render ship
+	//
+	ship.render();
+	ship.update();
+	
+	if ( ship.health <= 0 ) {
 		gameOver();
 	}
 
-
-	// render enemies
-	//
-	for (int i = 0; i < enemies.size(); i++)
+	switch (state)
 	{
-		GameObject e = enemies.get(i);
-
-		e.render();
-		e.update();
-
-		fill(0);
-		textSize(10);
-		textAlign(CENTER, CENTER);
-		text((int) e.health, e.pos.x, e.pos.y);
-		
-		if (e.health <= 0) {
-			enemies.remove(i);
+		case 0: {
+			break;
 		}
-		for (int j = 0; j < shipBullets.size(); j++)
-		{
-			Bullet b = shipBullets.get(j);
-			if ( e.checkHit(b) )
+		case 1: {
+			// render enemies
+			//
+			for (int i = 0; i < enemies.size(); i++)
 			{
-				shipBullets.remove(j);
-				e.shake();
-				e.health -= b.strength;
-				score += b.strength;
+				GameObject e = enemies.get(i);
+
+				e.render();
+				e.update();
+
+				fill(0);
+				textSize(10);
+				textAlign(CENTER, CENTER);
+				text((int) e.health, e.pos.x, e.pos.y);
+				
+				if (e.health <= 0) {
+					enemies.remove(i);
+				}
+				for (int j = 0; j < shipBullets.size(); j++)
+				{
+					Bullet b = shipBullets.get(j);
+					if ( e.checkHit(b) )
+					{
+						shipBullets.remove(j);
+						e.shake();
+						e.health -= b.strength;
+						score += b.strength;
+					}
+				}
 			}
+
+			// render ship bullets
+			//
+			for (int i = 0; i < shipBullets.size(); ++i)
+			{
+				Bullet b = shipBullets.get(i);
+				if (b.alive) {
+					b.render();
+				}
+				else {
+					shipBullets.remove(i);
+				}
+			}
+
+			// render enemy bullets
+			//
+			for (int i = 0; i < enemyBullets.size(); ++i)
+			{
+				Bullet b = enemyBullets.get(i);
+				if (b.alive) {
+					b.render();
+				}
+				else {
+					enemyBullets.remove(i);
+				}
+			}
+			
+			// check hits from enemy collisions
+			//
+			for (int j = 0; j < enemyBullets.size(); j++)
+			{
+				Bullet b = enemyBullets.get(j);
+				if ( ship.checkHit(b) )
+				{
+					enemyBullets.remove(j);
+					ship.shake();
+					ship.health -= b.strength;
+				}
+			}
+
+			if ( gameTime - lastSpawned >= difficulty)
+			{
+				float x1 = ship.pos.x - width / 2;
+				float x2 = ship.pos.x + width / 2;
+				float y1 = ship.pos.y - height / 2;
+				float y2 = ship.pos.y + height / 2;
+				float size = random(30, 100);
+
+				if ( random(0, 100) < 50 ) {
+					enemies.add( new BasicEnemy(x1, random(height), 1, size, 100, ship) );
+				}
+				else {
+					enemies.add( new BasicEnemy(random(width), y1, 1, size, 100, ship) );
+				}
+				lastSpawned = gameTime;
+			}
+
+			gameTime += timeDelta;
+			break;
 		}
 	}
-
-	// render ship bullets
-	//
-	for (int i = 0; i < shipBullets.size(); ++i)
-	{
-		Bullet b = shipBullets.get(i);
-		if (b.alive) {
-			b.render();
-		}
-		else {
-			shipBullets.remove(i);
-		}
-	}
-
-	// render enemy bullets
-	//
-	for (int i = 0; i < enemyBullets.size(); ++i)
-	{
-		Bullet b = enemyBullets.get(i);
-		if (b.alive) {
-			b.render();
-		}
-		else {
-			enemyBullets.remove(i);
-		}
-	}
-	
-	// check hits from enemy collisions
-	//
-	for (int j = 0; j < enemyBullets.size(); j++)
-	{
-		Bullet b = enemyBullets.get(j);
-		if ( ship.checkHit(b) )
-		{
-			enemyBullets.remove(j);
-			ship.shake();
-			ship.health -= b.strength;
-		}
-	}
-
-	if ( gameTime - lastSpawned >= difficulty)
-	{
-		float x1 = ship.pos.x - width / 2;
-		float x2 = ship.pos.x + width / 2;
-		float y1 = ship.pos.y - height / 2;
-		float y2 = ship.pos.y + height / 2;
-		float size = random(30, 100);
-
-		if ( random(0, 100) < 50 ) {
-			enemies.add( new BasicEnemy(x1, random(height), 1, size, 100, ship) );
-		}
-		else {
-			enemies.add( new BasicEnemy(random(width), y1, 1, size, 100, ship) );
-		}
-		lastSpawned = gameTime;
-	}
-
 	displayScore();
-	gameTime += timeDelta;
 }
 
 void gameOver()
@@ -185,6 +192,17 @@ void gameOver()
 	text("GAME OVER", ship.pos.x, ship.pos.y);
 
 	state = 0;
+
+	// remove all enemies
+	for (int i = 0; i < enemies.size(); ++i)
+	{
+		enemies.remove(i);
+	}
+
+	fill(255);
+	textSize(70);
+	textAlign(CENTER, CENTER);
+	text("Press 'R' to Continue", ship.pos.x, ship.pos.y + width / 4);
 }
 
 void displayScore()
@@ -204,6 +222,11 @@ void keyPressed()
  
 void keyReleased()
 {
+	if ( key == 'r' || key == 'R') {
+		state = 1;
+		score = 0;
+		ship.health = 100;
+	}
 	keys[keyCode] = false; 
 }
 
