@@ -7,8 +7,8 @@ class BasicEnemy extends Enemy
 	BasicEnemy(float x, float y, float speed, float health, Ship target)
 	{
 		super(x, y, health, speed, target);
-		oWidth = health;
-		oHeight = health;
+		oWidth = 30;
+		oHeight = 30;
 
 		fireRate = random(0, 0.3);;
 		lastShot = -1;
