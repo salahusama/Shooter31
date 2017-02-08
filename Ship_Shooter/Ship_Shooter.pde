@@ -14,8 +14,10 @@ int state;
 
 Background background;
 
-ArrayList<GameObject> gameObjects;
-ArrayList<Bullet> bullets;
+ArrayList<GameObject> enemies;
+
+ArrayList<Bullet> shipBullets;
+ArrayList<Bullet> enemyBullets;
 
 Ship ship;
 float enemyNo = 5;
@@ -29,7 +31,6 @@ void setup()
 	bullets = new ArrayList<Bullet>();
 
 	ship = new Ship(width / 2, height / 2, 1000);
-	gameObjects.add(ship);
 
 	for (int i = 0; i < enemyNo; ++i)
 	{
@@ -39,10 +40,10 @@ void setup()
 		float y2 = ship.pos.y + height / 2;
 
 		if ( random(0, 100) < 50 ) {
-			gameObjects.add( new BasicEnemy(x1, random(height), 1.0, 30, ship) );
+			enemies.add( new BasicEnemy(x1, random(height), 1.0, 30, ship) );
 		}
 		else {
-			gameObjects.add( new BasicEnemy(random(width), y1, 1, 30, ship) );
+			enemies.add( new BasicEnemy(random(width), y1, 1, 30, ship) );
 		}
 	}
 
@@ -69,36 +70,68 @@ void draw()
 	cam.lookAt((double)ship.pos.x, (double)ship.pos.y, 300, 0);
 
 	background.render();
-	for (int i = 0; i < gameObjects.size(); i++)
-	{
-		GameObject o = gameObjects.get(i);
+	ship.render();
+	ship.update();
 
-		o.render();
-		o.update();
-		
-		if (o.health < 0) {
-			gameObjects.remove(i);
-		}
-		for (int j = 0; j < bullets.size(); j++)
+	// check collisions
+	//
+	for (int j = 0; j < enemyBullets.size(); j++)
+	{
+		Bullet b = enemyBullets.get(j);
+		if ( ship.checkHit(b) )
 		{
-			Bullet b = bullets.get(j);
-			if ( o.checkHit(b) )
+			enemyBullets.remove(j);
+			ship.shake();
+			ship.health -= b.strength;
+		}
+	}
+	// render enemies
+	//
+	for (int i = 0; i < enemies.size(); i++)
+	{
+		Enemey e = enemies.get(i);
+
+		e.render();
+		e.update();
+		
+		if (e.health < 0) {
+			enemies.remove(i);
+		}
+		for (int j = 0; j < enemyBullets.size(); j++)
+		{
+			Bullet b = shipBullets.get(j);
+			if ( e.checkHit(b) )
 			{
-				bullets.remove(j);
-				o.shake();
-				o.health -= b.strength;
+				shipBullets.remove(j);
+				e.shake();
+				e.health -= b.strength;
 			}
 		}
 	}
 
-	for (int i = 0; i < bullets.size(); ++i)
+	// render ship bullets
+	//
+	for (int i = 0; i < shipBullets.size(); ++i)
 	{
-		Bullet b = bullets.get(i);
+		Bullet b = shipBullets.get(i);
 		if (b.alive) {
 			b.render();
 		}
 		else {
-			bullets.remove(i);
+			shipBullets.remove(i);
+		}
+	}
+
+	// render enemy bullets
+	//
+	for (int i = 0; i < enemyBullets.size(); ++i)
+	{
+		Bullet b = enemyBullets.get(i);
+		if (b.alive) {
+			b.render();
+		}
+		else {
+			enemyBullets.remove(i);
 		}
 	}
 	
