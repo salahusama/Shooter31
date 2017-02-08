@@ -27,8 +27,9 @@ void setup()
 	fullScreen(P3D);
 
 	state = 1;
-	gameObjects = new ArrayList<GameObject>();
-	bullets = new ArrayList<Bullet>();
+	enemies = new ArrayList<GameObject>();
+	shipBullets = new ArrayList<Bullet>();
+	enemyBullets = new ArrayList<Bullet>();
 
 	ship = new Ship(width / 2, height / 2, 1000);
 
@@ -89,7 +90,7 @@ void draw()
 	//
 	for (int i = 0; i < enemies.size(); i++)
 	{
-		Enemey e = enemies.get(i);
+		GameObject e = enemies.get(i);
 
 		e.render();
 		e.update();
@@ -97,7 +98,7 @@ void draw()
 		if (e.health < 0) {
 			enemies.remove(i);
 		}
-		for (int j = 0; j < enemyBullets.size(); j++)
+		for (int j = 0; j < shipBullets.size(); j++)
 		{
 			Bullet b = shipBullets.get(j);
 			if ( e.checkHit(b) )

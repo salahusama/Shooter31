@@ -57,7 +57,7 @@ class BasicEnemy extends Enemy
 		EnemyBullet b = new EnemyBullet(this, pos.x, pos.y, 10, theta);
 		normalShot.rewind();
 		normalShot.play();
-		bullets.add(b);
+		enemyBullets.add(b);
 		lastShot = gameTime;
 	}
 }
