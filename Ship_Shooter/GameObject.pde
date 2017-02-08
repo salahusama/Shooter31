@@ -30,7 +30,7 @@ abstract class GameObject
 
 	void shake()
 	{
-		PVector shake = new PVector(random(-10, 10), random(-10, 10));
+		PVector shake = new PVector(random(-20, 20), random(-20, 20));
 		pos.add(shake);
 	}
 

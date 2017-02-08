@@ -39,12 +39,13 @@ void setup()
 		float x2 = ship.pos.x + width / 2;
 		float y1 = ship.pos.y - height / 2;
 		float y2 = ship.pos.y + height / 2;
+		float size = random(30, 100);
 
 		if ( random(0, 100) < 50 ) {
-			enemies.add( new BasicEnemy(x1, random(height), 1.0, 30, ship) );
+			enemies.add( new BasicEnemy(x1, random(height), 1, size, 100, ship) );
 		}
 		else {
-			enemies.add( new BasicEnemy(random(width), y1, 1, 30, ship) );
+			enemies.add( new BasicEnemy(random(width), y1, 1, size, 100, ship) );
 		}
 	}
 

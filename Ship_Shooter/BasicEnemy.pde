@@ -4,13 +4,13 @@ class BasicEnemy extends Enemy
 	float fireRate;
 	color c;
 
-	BasicEnemy(float x, float y, float speed, float health, Ship target)
+	BasicEnemy(float x, float y, float speed, float size, float health, Ship target)
 	{
 		super(x, y, health, speed, target);
-		oWidth = 30;
-		oHeight = 30;
+		oWidth = size;
+		oHeight = size;
 
-		fireRate = random(0, 0.3);;
+		fireRate = random(0, 0.3);
 		lastShot = -1;
 
 		c = color (random(255), random(255), random(255));
