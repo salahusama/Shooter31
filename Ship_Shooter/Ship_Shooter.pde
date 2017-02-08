@@ -5,6 +5,8 @@ PeasyCam cam;
 Minim minim;
 
 AudioPlayer hit;
+AudioPlayer normalShot;
+AudioPlayer loudShot;
 
 float gameTime = 0.0;
 float timeDelta = 1.0 / 60;
@@ -53,6 +55,8 @@ void setup()
 	
 	minim = new Minim(this);
 	hit = minim.loadFile("thud1.mp3");
+	normalShot = minim.loadFile("shot1.mp3");
+	loudShot = minim.loadFile("shot2.mp3");
 
 	cam = new PeasyCam(this, (double)ship.pos.x, (double)ship.pos.y, 0, 0);
 	cam.setMinimumDistance(50);

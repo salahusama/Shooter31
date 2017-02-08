@@ -7,10 +7,10 @@ class BasicEnemy extends Enemy
 	BasicEnemy(float x, float y, float speed, float health, Ship target)
 	{
 		super(x, y, health, speed, target);
-		oWidth = 20;
-		oHeight = 20;
+		oWidth = health;
+		oHeight = health;
 
-		fireRate = 0.2;
+		fireRate = random(0, 0.3);;
 		lastShot = -1;
 
 		c = color (random(255), random(255), random(255));
@@ -55,6 +55,8 @@ class BasicEnemy extends Enemy
 	void fire()
 	{
 		EnemyBullet b = new EnemyBullet(this, pos.x, pos.y, 10, theta);
+		normalShot.rewind();
+		normalShot.play();
 		bullets.add(b);
 		lastShot = gameTime;
 	}

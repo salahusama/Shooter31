@@ -99,6 +99,8 @@ class Ship extends GameObject
 	void bullet_normal()
 	{
 		FriendlyBullet b = new FriendlyBullet(this, pos.x, pos.y, 10, theta);
+		normalShot.rewind();
+		normalShot.play();
 		bullets.add(b);
 		lastShot = gameTime;
 	}
@@ -109,6 +111,8 @@ class Ship extends GameObject
 		while ( shotAngle - theta < TWO_PI )
 		{
 			FriendlyBullet b = new FriendlyBullet(this, pos.x, pos.y, 10, shotAngle);
+			normalShot.rewind();
+			normalShot.play();
 			bullets.add(b);
 			shotAngle += 0.1;
 		}
@@ -118,6 +122,8 @@ class Ship extends GameObject
 	void bullet_super()
 	{
 		FriendlyBullet b = new FriendlyBullet(this, pos.x, pos.y, 50, theta);
+		loudShot.rewind();
+		loudShot.play();
 		bullets.add(b);
 		lastShot = gameTime;
 	}
