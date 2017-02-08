@@ -111,7 +111,7 @@ class Ship extends GameObject
 
 	void bullet_super()
 	{
-		Bullet b = new Bullet(this, pos.x, pos.y, 100, theta);
+		Bullet b = new Bullet(this, pos.x, pos.y, 50, theta);
 		bullets.add(b);
 		lastShot = gameTime;
 	}

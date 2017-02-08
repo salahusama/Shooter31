@@ -35,7 +35,7 @@ void setup()
 
 	background = new Background(200, xLimit1, xLimit2, yLimit1, yLimit2);
 
-	cam = new PeasyCam(this, 0);
+	cam = new PeasyCam(this, (double)ship.pos.x, (double)ship.pos.y, 0, 0);
 	cam.setMinimumDistance(50);
 	cam.setMinimumDistance(500);
 	cam.setRollRotationMode();
@@ -43,9 +43,8 @@ void setup()
 
 void draw()
 {
-	//cam.lookAt((double)ship.pos.x, (double)ship.pos.y, 0);
-
 	background.render();
+	cam.lookAt((double)ship.pos.x, (double)ship.pos.y, 0);
 	for (int i = 0; i < gameObjects.size(); i++)
 	{
 		GameObject o = gameObjects.get(i);

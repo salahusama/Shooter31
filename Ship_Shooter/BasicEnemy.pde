@@ -27,5 +27,16 @@ class BasicEnemy extends Enemy
 		pos.add(forward);
 
 		updateTheta();
+
+		if (gameTime % 1 == 0)
+		{
+			fire();
+		}
+	}
+
+	void fire()
+	{
+		Bullet b = new Bullet(this, pos.x, pos.y, 10, theta);
+		bullets.add(b);
 	}
 }
