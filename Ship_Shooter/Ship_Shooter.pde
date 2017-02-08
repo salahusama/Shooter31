@@ -17,6 +17,7 @@ int state;
 int difficulty = 1; // spawn rate
 float lastSpawned = 0;
 int score = 0;
+int highScore = 0;
 
 Background background;
 
@@ -197,6 +198,15 @@ void gameOver()
 	textSize(250);
 	textAlign(CENTER, CENTER);
 	text("GAME OVER", ship.pos.x, ship.pos.y);
+
+	// high score
+	if (score > highScore) {
+		highScore = score;
+	}
+	fill(50, 200, 100);
+	textSize(50);
+	textAlign(CENTER, CENTER);
+	text("High Score: " + highScore, ship.pos.x, ship.pos.y - 250);
 
 	state = 0;
 
