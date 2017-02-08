@@ -14,9 +14,9 @@ class Ship extends GameObject
 	float lastShot;
 	float fireRate;
 
-	Ship(float x, float y)
+	Ship(float x, float y, float health)
 	{
-		super(x, y);
+		super(x, y, health);
 		velocity = new PVector(0, 0);
 		forward = new PVector(0, -1);
 		accel = new PVector(0, 0);
@@ -29,8 +29,11 @@ class Ship extends GameObject
 		theta = 0;
 		mass = 1;
 
+		oWidth = 50;
+		oHeight = 50;
+
 		shipImg = loadImage("ship.png");
-		shipImg.resize(50, 50);
+		shipImg.resize((int)oWidth, (int)oHeight);
 	}
 
 	void render()
@@ -44,7 +47,7 @@ class Ship extends GameObject
 		translate(pos.x, pos.y);
 		rotate(theta + HALF_PI);
 		
-		ellipse(0, 0, 1.5 * shipImg.width, 1.5 * shipImg.height);
+		ellipse(0, 0, 1.5 * oWidth, 1.5 * oHeight);
 		image(shipImg, -shipImg.width/2, - shipImg.height/2);
 		
 		popMatrix();

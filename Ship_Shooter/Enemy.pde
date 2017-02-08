@@ -7,9 +7,9 @@ abstract class Enemy extends GameObject
 
 	Ship target;
 
-	Enemy(float x, float y, float speed, Ship target)
+	Enemy(float x, float y, float health, float speed, Ship target)
 	{
-		super(x, y);
+		super(x, y, health);
 		this.target = target;
 		forward = new PVector(0, 0);
 		this.speed = speed;

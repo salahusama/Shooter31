@@ -2,8 +2,9 @@ class BasicEnemy extends Enemy
 {
 	BasicEnemy(float x, float y, float speed, Ship target, float health)
 	{
-		super(x, y, speed, target);
-		this.health = health;
+		super(x, y, health, speed, target);
+		oWidth = 100;
+		oHeight = 100;
 	}
 
 	void render()
@@ -12,9 +13,9 @@ class BasicEnemy extends Enemy
 		translate(pos.x, pos.y);
 		
 		rotate(theta);
-		fill(255);
+		fill(100, 100, 0);
 		noStroke();
-		ellipse(0, 0, 10, 10);
+		ellipse(0, 0, oWidth, oHeight);
 
 		popMatrix();
 	}

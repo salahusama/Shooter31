@@ -4,6 +4,8 @@ PeasyCam cam;
 
 float gameTime = 0.0;
 float timeDelta = 1.0 / 60;
+int state;
+
 Background background;
 
 ArrayList<GameObject> gameObjects;
@@ -16,11 +18,11 @@ void setup()
 {
 	fullScreen(P3D);
 
-
+	state = 1;
 	gameObjects = new ArrayList<GameObject>();
 	bullets = new ArrayList<Bullet>();
 
-	ship = new Ship(width / 2, height / 2);
+	ship = new Ship(width / 2, height / 2, 100);
 	gameObjects.add(ship);
 
 	tempEnemy = new BasicEnemy(100, 100, 2, ship, 100);
@@ -33,30 +35,37 @@ void setup()
 
 	background = new Background(200, xLimit1, xLimit2, yLimit1, yLimit2);
 
-	/*
 	cam = new PeasyCam(this, 0);
 	cam.setMinimumDistance(50);
 	cam.setMinimumDistance(500);
 	cam.setRollRotationMode();
-	*/
 }
 
 void draw()
 {
-	background.render();
+	//cam.lookAt((double)ship.pos.x, (double)ship.pos.y, 0);
 
-	for (GameObject o : gameObjects)
+	background.render();
+	for (int i = 0; i < gameObjects.size(); i++)
 	{
+		GameObject o = gameObjects.get(i);
+
 		o.render();
 		o.update();
-	}
-	/* Other for loop allows us to remove bullets after they die
-	for (Bullet b : bullets)
-	{
-		if (b.alive) {
-			b.render();
+		
+		if (o.health < 0) {
+			gameObjects.remove(i);
 		}
-	}*/
+		for (int j = 0; j < bullets.size(); j++)
+		{
+			Bullet b = bullets.get(j);
+			if ( o.checkHit(b) )
+			{
+				bullets.remove(j);
+				o.health -= b.strength;
+			}
+		}
+	}
 
 	for (int i = 0; i < bullets.size(); ++i)
 	{
@@ -68,6 +77,7 @@ void draw()
 			bullets.remove(i);
 		}
 	}
+	
 	gameTime += timeDelta;
 }
 

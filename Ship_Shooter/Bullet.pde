@@ -1,16 +1,17 @@
-class Bullet extends GameObject
+class Bullet
 {
 	float theta;
 	float strength;
 	float aliveTime;
 	boolean alive;
 
+	PVector pos;
 	PVector forward;
 	Ship parent;
 
 	Bullet(Ship parent, float x, float y, float strength, float theta)
 	{
-		super(x + (parent.shipImg.width + strength/2) * sin(theta), y + (parent.shipImg.height + strength/2) * -cos(theta));
+		pos = new PVector(x + (parent.shipImg.width + strength/2) * sin(theta), y + (parent.shipImg.height + strength/2) * -cos(theta));
 		this.parent = parent;
 		this.theta = theta;
 		this.strength = strength;
