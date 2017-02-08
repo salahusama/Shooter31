@@ -10,7 +10,6 @@ class Ship extends GameObject
 	float mass;
 	float theta;
 	float power;
-	float shield;
 	float lastShot;
 	float fireRate;
 
@@ -24,7 +23,6 @@ class Ship extends GameObject
 		
 		fireRate = 1;
 		lastShot = -1;
-		shield = 10;
 		power = 300;
 		theta = 0;
 		mass = 1;
@@ -38,8 +36,7 @@ class Ship extends GameObject
 
 	void render()
 	{
-		stroke(255);
-		strokeWeight(shield);
+		noStroke();
 		noFill();
 
 		pushMatrix();
@@ -51,6 +48,10 @@ class Ship extends GameObject
 		image(shipImg, -shipImg.width/2, - shipImg.height/2);
 		
 		popMatrix();
+
+		if (doShake) {
+			shake();
+		}
 	}
 
 	void update()
@@ -81,6 +82,11 @@ class Ship extends GameObject
 			if ( checkKey('x') ) {
 				bullet_super();
 			}
+		}
+
+		if (gameTime - lastHit >= timeToShake)
+		{
+			doShake = false;
 		}
 		
 		accel = PVector.div(force, mass);

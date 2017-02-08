@@ -1,6 +1,10 @@
+import ddf.minim.*;
 import peasy.*;
 
 PeasyCam cam;
+Minim minim;
+
+AudioPlayer hit;
 
 float gameTime = 0.0;
 float timeDelta = 1.0 / 60;
@@ -12,7 +16,7 @@ ArrayList<GameObject> gameObjects;
 ArrayList<Bullet> bullets;
 
 Ship ship;
-BasicEnemy tempEnemy;
+float enemyNo = 5;
 
 void setup()
 {
@@ -22,11 +26,23 @@ void setup()
 	gameObjects = new ArrayList<GameObject>();
 	bullets = new ArrayList<Bullet>();
 
-	ship = new Ship(width / 2, height / 2, 100);
+	ship = new Ship(width / 2, height / 2, 1000);
 	gameObjects.add(ship);
 
-	tempEnemy = new BasicEnemy(100, 100, 2, ship, 100);
-	gameObjects.add(tempEnemy);
+	for (int i = 0; i < enemyNo; ++i)
+	{
+		float x1 = ship.pos.x - width / 2;
+		float x2 = ship.pos.x + width / 2;
+		float y1 = ship.pos.y - height / 2;
+		float y2 = ship.pos.y + height / 2;
+		
+		if ( random(0, 100) < 50 ) {
+			gameObjects.add( new BasicEnemy(x1, random(height), 1.0, 15.0, ship) );
+		}
+		else {
+			gameObjects.add( new BasicEnemy(random(width), y1, 1, 15, ship) );
+		}
+	}
 
 	float xLimit1 = ship.pos.x - 1000;
 	float xLimit2 = ship.pos.x + 1000;
@@ -34,6 +50,9 @@ void setup()
 	float yLimit2 = ship.pos.x + 1000;
 
 	background = new Background(200, xLimit1, xLimit2, yLimit1, yLimit2);
+	
+	minim = new Minim(this);
+	hit = minim.loadFile("thud1.mp3");
 
 	cam = new PeasyCam(this, (double)ship.pos.x, (double)ship.pos.y, 0, 0);
 	cam.setMinimumDistance(50);
@@ -43,7 +62,8 @@ void setup()
 
 void draw()
 {
-	cam.lookAt((double)ship.pos.x, (double)ship.pos.y, 0, 0);
+	cam.lookAt((double)ship.pos.x, (double)ship.pos.y, 300, 20);
+
 	background.render();
 	for (int i = 0; i < gameObjects.size(); i++)
 	{
@@ -61,6 +81,7 @@ void draw()
 			if ( o.checkHit(b) )
 			{
 				bullets.remove(j);
+				o.shake();
 				o.health -= b.strength;
 			}
 		}

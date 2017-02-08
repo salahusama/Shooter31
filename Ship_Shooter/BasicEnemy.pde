@@ -1,10 +1,19 @@
 class BasicEnemy extends Enemy
 {
-	BasicEnemy(float x, float y, float speed, Ship target, float health)
+	float lastShot;
+	float fireRate;
+	color c;
+
+	BasicEnemy(float x, float y, float speed, float health, Ship target)
 	{
 		super(x, y, health, speed, target);
-		oWidth = 100;
-		oHeight = 100;
+		oWidth = 20;
+		oHeight = 20;
+
+		fireRate = 0.2;
+		lastShot = -1;
+
+		c = color (random(255), random(255), random(255));
 	}
 
 	void render()
@@ -13,11 +22,15 @@ class BasicEnemy extends Enemy
 		translate(pos.x, pos.y);
 		
 		rotate(theta);
-		fill(100, 100, 0);
+		fill(c);
 		noStroke();
 		ellipse(0, 0, oWidth, oHeight);
 
 		popMatrix();
+
+		if (doShake) {
+			shake();
+		}
 	}
 
 	void update()
@@ -28,15 +41,21 @@ class BasicEnemy extends Enemy
 
 		updateTheta();
 
-		if (gameTime % 1 == 0)
+		if (gameTime - lastShot >= 1 / fireRate)
 		{
-			//fire();
+			fire();
+		}
+
+		if (gameTime - lastHit >= timeToShake)
+		{
+			doShake = false;
 		}
 	}
-/*
+
 	void fire()
 	{
-		Bullet b = new Bullet(this, pos.x, pos.y, 10, theta);
+		EnemyBullet b = new EnemyBullet(this, pos.x, pos.y, 10, theta);
 		bullets.add(b);
-	}*/
+		lastShot = gameTime;
+	}
 }

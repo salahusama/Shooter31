@@ -1,8 +1,8 @@
-class FriendlyBullet extends Bullet
+class EnemyBullet extends Bullet
 {
-	Ship parent;
+	Enemy parent;
 
-	FriendlyBullet(Ship parent, float x, float y, float strength, float theta)
+	EnemyBullet(Enemy parent, float x, float y, float strength, float theta)
 	{
 		super(x + (parent.oWidth + strength/2) * sin(theta), y + (parent.oHeight + strength/2) * -cos(theta), strength, theta);
 		this.parent = parent;
@@ -11,8 +11,8 @@ class FriendlyBullet extends Bullet
 	void render()
 	{
 		strokeWeight(3);
-		stroke(0, 0, 250);
-		fill(180, 255, 255, 255);
+		stroke(250, 0, 00);
+		fill(255, 255, 180);
 
 		super.render();
 	}
