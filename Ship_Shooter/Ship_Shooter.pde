@@ -11,9 +11,9 @@ AudioPlayer loudShot;
 float gameTime = 0.0;
 float timeDelta = 1.0 / 60;
 int state;
-int difficulty = 10; // spawn rate
+int difficulty = 1; // spawn rate
 float lastSpawned = 0;
-int score;
+int score = 0;
 
 Background background;
 
@@ -112,6 +112,7 @@ void draw()
 				shipBullets.remove(j);
 				e.shake();
 				e.health -= b.strength;
+				score += b.strength;
 			}
 		}
 	}
@@ -142,7 +143,7 @@ void draw()
 		}
 	}
 	
-	// check collisions
+	// check hits from enemy collisions
 	//
 	for (int j = 0; j < enemyBullets.size(); j++)
 	{
@@ -170,7 +171,9 @@ void draw()
 			enemies.add( new BasicEnemy(random(width), y1, 1, size, 100, ship) );
 		}
 		lastSpawned = gameTime;
-		}
+	}
+
+	displayScore();
 	gameTime += timeDelta;
 }
 
@@ -182,6 +185,14 @@ void gameOver()
 	text("GAME OVER", ship.pos.x, ship.pos.y);
 
 	state = 0;
+}
+
+void displayScore()
+{
+	fill(0, 255, 255);
+	textSize(30);
+	textAlign(CENTER, CENTER);
+	text("Score: " + score, ship.pos.x, ship.pos.y + 30 - height / 2);
 }
 
 boolean[] keys = new boolean[1000];
