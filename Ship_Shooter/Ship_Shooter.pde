@@ -62,7 +62,7 @@ void setup()
 
 void draw()
 {
-	cam.lookAt((double)ship.pos.x, (double)ship.pos.y, 300, 20);
+	cam.lookAt((double)ship.pos.x, (double)ship.pos.y, 300, 0);
 
 	background.render();
 	for (int i = 0; i < gameObjects.size(); i++)
