@@ -7,12 +7,10 @@ class Bullet
 
 	PVector pos;
 	PVector forward;
-	Ship parent;
 
-	Bullet(Ship parent, float x, float y, float strength, float theta)
+	Bullet(float x, float y, float strength, float theta)
 	{
-		pos = new PVector(x + (parent.shipImg.width + strength/2) * sin(theta), y + (parent.shipImg.height + strength/2) * -cos(theta));
-		this.parent = parent;
+		pos = new PVector(x, y);
 		this.theta = theta;
 		this.strength = strength;
 		forward = new PVector(0, 0);
@@ -24,10 +22,6 @@ class Bullet
 
 	void render()
 	{
-		strokeWeight(3);
-		stroke(0, 0, 250);
-		fill(180, 255, 255, 255);
-
 		pushMatrix();
 		translate(pos.x, pos.y);
 		if (size < strength) {
