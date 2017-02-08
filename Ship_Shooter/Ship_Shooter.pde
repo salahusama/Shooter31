@@ -4,7 +4,7 @@ import peasy.*;
 PeasyCam cam;
 Minim minim;
 
-AudioPlayer hit;
+//AudioPlayer hit;
 
 float gameTime = 0.0;
 float timeDelta = 1.0 / 60;
