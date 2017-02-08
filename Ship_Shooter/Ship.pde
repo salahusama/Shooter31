@@ -162,8 +162,14 @@ class HealthBar
 		updateTheta();
 
 		strokeWeight(5);
-		stroke(0, 255, 0);
 		noFill();
+		
+		if (theta > 1.5 * PI)
+			stroke(0, 255, 0);
+		else if (theta > HALF_PI)
+			stroke(255, 255, 0);
+		else
+			stroke(255, 0, 0);
 
 		arc(owner.pos.x, owner.pos.y, diameter, diameter, 0, theta);
 	}
