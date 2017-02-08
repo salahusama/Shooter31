@@ -7,6 +7,7 @@ Minim minim;
 AudioPlayer hit;
 AudioPlayer normalShot;
 AudioPlayer loudShot;
+AudioPlayer death;
 
 float gameTime = 0.0;
 float timeDelta = 1.0 / 60;
@@ -63,6 +64,7 @@ void setup()
 	hit = minim.loadFile("thud1.mp3");
 	normalShot = minim.loadFile("shot1.mp3");
 	loudShot = minim.loadFile("shot2.mp3");
+	death = minim.loadFile("death.mp3");
 
 	cam = new PeasyCam(this, (double)ship.pos.x, (double)ship.pos.y, 0, 0);
 	cam.setMinimumDistance(50);
@@ -186,6 +188,7 @@ void draw()
 
 void gameOver()
 {
+	death.play();
 	fill(255, 50, 50);
 	textSize(100);
 	textAlign(CENTER, CENTER);
@@ -199,10 +202,30 @@ void gameOver()
 		enemies.remove(i);
 	}
 
+	// remove all enemyBullets
+	for (int i = 0; i < enemyBullets.size(); ++i)
+	{
+		enemyBullets.remove(i);
+	}
+
+	// remove all shipBullets
+	for (int i = 0; i < shipBullets.size(); ++i)
+	{
+		shipBullets.remove(i);
+	}
+
 	fill(255);
 	textSize(70);
 	textAlign(CENTER, CENTER);
 	text("Press 'R' to Continue", ship.pos.x, ship.pos.y + width / 4);
+}
+
+void reset()
+{
+	state = 1;
+	score = 0;
+	ship.health = 100;
+	death.rewind();
 }
 
 void displayScore()
@@ -223,9 +246,7 @@ void keyPressed()
 void keyReleased()
 {
 	if ( key == 'r' || key == 'R') {
-		state = 1;
-		score = 0;
-		ship.health = 100;
+		reset();
 	}
 	keys[keyCode] = false; 
 }
