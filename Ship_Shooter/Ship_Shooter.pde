@@ -31,7 +31,7 @@ void setup()
 	shipBullets = new ArrayList<Bullet>();
 	enemyBullets = new ArrayList<Bullet>();
 
-	ship = new Ship(width / 2, height / 2, 1000);
+	ship = new Ship(width / 2, height / 2, 300);
 
 	for (int i = 0; i < enemyNo; ++i)
 	{

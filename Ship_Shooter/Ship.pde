@@ -13,6 +13,8 @@ class Ship extends GameObject
 	float lastShot;
 	float fireRate;
 
+	HealthBar healthBar;
+
 	Ship(float x, float y, float health)
 	{
 		super(x, y, health);
@@ -32,6 +34,8 @@ class Ship extends GameObject
 
 		shipImg = loadImage("ship.png");
 		shipImg.resize((int)oWidth, (int)oHeight);
+
+		healthBar = new HealthBar(this);
 	}
 
 	void render()
@@ -43,11 +47,12 @@ class Ship extends GameObject
 
 		translate(pos.x, pos.y);
 		rotate(theta + HALF_PI);
-		
-		ellipse(0, 0, 1.5 * oWidth, 1.5 * oHeight);
+
 		image(shipImg, -shipImg.width/2, - shipImg.height/2);
 		
 		popMatrix();
+
+		healthBar.render();
 
 		if (doShake) {
 			shake();
@@ -126,5 +131,40 @@ class Ship extends GameObject
 		loudShot.play();
 		shipBullets.add(b);
 		lastShot = gameTime;
+	}
+}
+
+class HealthBar
+{
+	Ship owner;
+
+	float fullHealth;
+	float theta;
+	float diameter;
+
+	HealthBar(Ship owner)
+	{
+		this.owner = owner;
+		this.fullHealth = owner.health;
+		this.diameter = owner.oWidth * 1.5;
+
+		updateTheta();
+	}
+
+	void updateTheta()
+	{
+		// use health as fraction
+		theta = (owner.health / fullHealth) * TWO_PI;
+	}
+
+	void render()
+	{
+		updateTheta();
+
+		strokeWeight(5);
+		stroke(0, 255, 0);
+		noFill();
+
+		arc(owner.pos.x, owner.pos.y, diameter, diameter, 0, theta);
 	}
 }
