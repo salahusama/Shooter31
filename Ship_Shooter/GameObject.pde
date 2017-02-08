@@ -36,13 +36,9 @@ abstract class GameObject
 
 	boolean checkHit(Bullet b)
 	{
-		float xLimit1 = b.pos.x - b.strength / 2;
-		float xLimit2 = b.pos.x + b.strength / 2;
+		float distance = dist(b.pos.x, b.pos.y, this.pos.x, this.pos.y);
 
-		float yLimit1 = b.pos.y - b.strength / 2;
-		float yLimit2 = b.pos.y + b.strength / 2;
-
-		if (xLimit1 > this.pos.x - oWidth/2 && xLimit2 < this.pos.x + oWidth/2 && yLimit1 > this.pos.y - oHeight/2 && yLimit2 < this.pos.y + oHeight/2)
+		if ( distance <= b.strength / 2 || distance <= this.oWidth / 2)
 		{
 			lastHit = gameTime;
 			hit.rewind();
