@@ -9,6 +9,8 @@ AudioPlayer normalShot;
 AudioPlayer loudShot;
 AudioPlayer death;
 
+PFont font;
+
 float gameTime = 0.0;
 float timeDelta = 1.0 / 60;
 int state;
@@ -29,12 +31,14 @@ float enemyNo = 5;
 void setup()
 {
 	fullScreen(P3D);
-
+	smooth(4);
 	state = 1;
 	enemies = new ArrayList<GameObject>();
 	shipBullets = new ArrayList<Bullet>();
 	enemyBullets = new ArrayList<Bullet>();
 
+	font = loadFont("BodoniMTCondensed-Bold-200.vlw");
+	textFont(font);
 	ship = new Ship(width / 2, height / 2, 100);
 
 	for (int i = 0; i < enemyNo; ++i)
@@ -103,7 +107,7 @@ void draw()
 				e.update();
 
 				fill(0);
-				textSize(10);
+				textSize(20);
 				textAlign(CENTER, CENTER);
 				text((int) e.health, e.pos.x, e.pos.y);
 				
@@ -190,7 +194,7 @@ void gameOver()
 {
 	death.play();
 	fill(255, 50, 50);
-	textSize(100);
+	textSize(250);
 	textAlign(CENTER, CENTER);
 	text("GAME OVER", ship.pos.x, ship.pos.y);
 
@@ -231,7 +235,7 @@ void reset()
 void displayScore()
 {
 	fill(0, 255, 255);
-	textSize(30);
+	textSize(60);
 	textAlign(CENTER, CENTER);
 	text("Score: " + score, ship.pos.x, ship.pos.y + 30 - height / 2);
 }
